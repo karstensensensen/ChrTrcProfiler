@@ -104,3 +104,9 @@ int main()
 ### Result
 
 ![Alternate text](Images/Result.png)
+
+## Building
+
+this library uses the cmake build system, with no optional macros.
+thus, it should enough to create a build directory and simply call cmake generate and build.
+> mkdir build && cd build && cmake build ..

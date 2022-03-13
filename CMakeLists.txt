@@ -4,7 +4,7 @@ else()
 	cmake_minimum_required (VERSION 3.0.0)
 endif()
 
-set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD 17)
 
 project("ChrTrcProfiler" VERSION "0.1.0" LANGUAGES CXX)
 

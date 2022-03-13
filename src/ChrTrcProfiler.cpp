@@ -90,10 +90,10 @@ namespace ChrTrcProfiler
 				(uint32_t)duration_cast<microseconds>(start.time_since_epoch()).count(),
 				(uint32_t)duration_cast<microseconds>(end.time_since_epoch() - start.time_since_epoch()).count() };
 
-			if (!m_names.contains(data.name_hash))
+			if (m_names.find(data.name_hash) == m_names.end())
 				m_names[data.name_hash] = name;
 
-			if (!m_categories.contains(data.cat_hash))
+			if (m_categories.find(data.cat_hash) == m_names.end())
 				m_categories[data.cat_hash] = category;
 
 			m_profiling_data.push_back(data);
