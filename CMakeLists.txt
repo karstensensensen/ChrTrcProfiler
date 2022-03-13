@@ -14,7 +14,6 @@ set(PREDEFINED_TARGETS_FOLDER "Targets")
 
 set (SRC
 	src/ChrTrcProfiler.cpp
-	src/main.cpp
 )
 
 set (INCLUDE
@@ -24,7 +23,7 @@ set (INCLUDE
 )
 
 # Add source to this project's executable.
-add_executable ( ${PROJECT_NAME} 
+add_library ( ${PROJECT_NAME} 
 	${INCLUDE} ${SRC}
 )
 
