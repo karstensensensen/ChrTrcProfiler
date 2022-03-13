@@ -122,4 +122,4 @@ namespace ChrTrcProfiler
 }
 
 
-#include "ChrTrcProfiler.ipp"
+#include "../ipp_src/ChrTrcProfiler.ipp"
