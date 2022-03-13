@@ -11,7 +11,7 @@
 // ============ macros ============
 
 #ifndef CT_NO_PROFILING
-#define CT_MAC(M)
+#define CT_MAC(M) M
 #else
 #define CT_MAC(M)
 #endif
