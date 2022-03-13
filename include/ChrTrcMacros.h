@@ -10,11 +10,17 @@
 
 // ============ macros ============
 
-#define CT_MEASURE_V(verbosity) ::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(__FUNCSIG__, "")
+#ifndef CT_NO_PROFILING
+#define CT_MAC(M)
+#else
+#define CT_MAC(M)
+#endif
 
-#define CT_MEASURE_VC(verbosity, category) ::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(__FUNCSIG__, category)
+#define CT_MEASURE_V(verbosity) CT_MAC(::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(__FUNCSIG__, "")))
 
-#define CT_MEASURE_VNC(verbosity, name, category) ::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(name " (" __FUNCTION__ ")", category)
+#define CT_MEASURE_VC(verbosity, category) CT_MAC(::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(__FUNCSIG__, category))
+
+#define CT_MEASURE_VNC(verbosity, name, category) CT_MAC(::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(name " (" __FUNCTION__ ")", category))
 
 #define CT_MEASURE_VN(verbosity, name) CT_MEASURE_VNC(verbosity, name, "")
 
