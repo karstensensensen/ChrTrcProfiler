@@ -2,11 +2,20 @@
 
 // file containing various macros for quickly setting up a ScopedTimer with relevant naming.
 
+
 // ============ helpers ============
 
 #define CT_HELPER_HELPER_HELPER_STR(str, mac) str##mac
 #define CT_HELPER_HELPER_STR(str, mac) CT_HELPER_HELPER_HELPER_STR(str, mac)
 #define CT_HELPER_STR(str) CT_HELPER_HELPER_STR(str, __LINE__)
+
+#ifdef WIN32
+#define CT_FUNC_SIG __FUNCSIG__
+#define CT_FUNC_NAME __FUNCTION__
+#else
+#define CT_FUNC_SIG __PRETTY_FUNCTION__
+#define CT_FUNC_NAME __func__
+#endif
 
 // ============ macros ============
 
@@ -16,11 +25,11 @@
 #define CT_MAC(M)
 #endif
 
-#define CT_MEASURE_V(verbosity) CT_MAC(::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(__FUNCSIG__, "")))
+#define CT_MEASURE_V(verbosity) CT_MAC(::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(CT_FUNC_SIG, ""))
 
-#define CT_MEASURE_VC(verbosity, category) CT_MAC(::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(__FUNCSIG__, category))
+#define CT_MEASURE_VC(verbosity, category) CT_MAC(::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(CT_FUNC_SIG, category))
 
-#define CT_MEASURE_VNC(verbosity, name, category) CT_MAC(::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(name " (" __FUNCTION__ ")", category))
+#define CT_MEASURE_VNC(verbosity, name, category) CT_MAC(::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(name " (" CT_FUNC_NAME ")", category))
 
 #define CT_MEASURE_VN(verbosity, name) CT_MEASURE_VNC(verbosity, name, "")
 
