@@ -18,7 +18,7 @@ set (SRC
 
 set (INCLUDE
 	include/ChrTrcProfiler.h
-	include/ChrTrcMacros.h
+	include/ChrTrc.h
 	include/ChrTrcCompileTimeString.h
 	ipp_src/ChrTrcProfiler.ipp
 )
