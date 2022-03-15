@@ -8,6 +8,7 @@
 #include <mutex>
 #include <condition_variable>
 #include <string>
+#include <vector>
 
 namespace ChrTrcProfiler
 {
@@ -31,6 +32,10 @@ namespace ChrTrcProfiler
 	{
 	public:
 		/// @brief the timer is automaticly started on construction.
+		/// 
+		///
+		/// both string variables expect the strings to be allocated until the session ends.
+		/// Thus, it is recommended to pass static storage strings or stringliterals.
 		/// 
 		/// @param name the name the data should be associated with. This should always be passed as a string literal!
 		/// @param cat the category the data should be associated with. This should always be passed as a string literal!
