@@ -1,5 +1,7 @@
 #pragma once
 
+#include "ChrTrcCompileTimeString.h"
+
 // file containing various macros for quickly setting up a ScopedTimer with relevant naming.
 
 // ============ helpers ============
@@ -16,11 +18,13 @@
 #define CT_MAC(M)
 #endif
 
-#define CT_MEASURE_V(verbosity) CT_MAC(::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(__FUNCSIG__, "")))
+#define CT_MEASURE_V(verbosity) CT_MAC(::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(__FUNCSIG__, ""))
 
 #define CT_MEASURE_VC(verbosity, category) CT_MAC(::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(__FUNCSIG__, category))
 
-#define CT_MEASURE_VNC(verbosity, name, category) CT_MAC(::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(name " (" __FUNCTION__ ")", category))
+#define CT_MEASURE_VNC(verbosity, name, category) CT_MAC(\
+constexpr auto CT_HELPER_STR(STIMER_NAME) = ::ChrTrcProfiler::ChrTrcCompileTimeStr::CTStr(name) + " (" + ::ChrTrcProfiler::ChrTrcCompileTimeStr::CTStr(__FUNCTION__) + ")").data();\
+::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(CT_HELPER_STR(STIMER_NAME).data(), category)\
 
 #define CT_MEASURE_VN(verbosity, name) CT_MEASURE_VNC(verbosity, name, "")
 

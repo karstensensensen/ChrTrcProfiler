@@ -18,8 +18,9 @@ set (SRC
 
 set (INCLUDE
 	include/ChrTrcProfiler.h
-	ipp_src/ChrTrcProfiler.ipp
 	include/ChrTrcMacros.h
+	include/ChrTrcCompileTimeString.h
+	ipp_src/ChrTrcProfiler.ipp
 )
 
 # Add source to this project's executable.

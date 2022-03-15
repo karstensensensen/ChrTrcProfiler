@@ -93,7 +93,7 @@ namespace ChrTrcProfiler
 			if (m_names.find(data.name_hash) == m_names.end())
 				m_names[data.name_hash] = name;
 
-			if (m_categories.find(data.cat_hash) == m_names.end())
+			if (m_categories.find(data.cat_hash) == m_categories.end())
 				m_categories[data.cat_hash] = category;
 
 			m_profiling_data.push_back(data);
