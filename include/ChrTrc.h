@@ -1,8 +1,11 @@
 #pragma once
+// file containing various macros for quickly setting up a ScopedTimer with relevant naming.
 
+// ============ includes ============
+
+#include "ChrTrcProfiler.h"
 #include "ChrTrcCompileTimeString.h"
 
-// file containing various macros for quickly setting up a ScopedTimer with relevant naming.
 
 
 // ============ helpers ============
