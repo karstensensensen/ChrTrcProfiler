@@ -19,21 +19,21 @@
 #define CT_FUNC_NAME __func__
 #endif
 
-// ============ macros ============
-
 #ifndef CT_NO_PROFILING
-#define CT_MAC(M) M
+#define CT_GATE(M) M
 #else
-#define CT_MAC(M)
+#define CT_GATE(M)
 #endif
 
-#define CT_MEASURE_V(verbosity) CT_MAC(::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(CT_FUNC_SIG, ""))
+// ============ macros ============
 
-#define CT_MEASURE_VC(verbosity, category) CT_MAC(::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(CT_FUNC_SIG, category))
+#define CT_MEASURE_V(verbosity) CT_GATE(::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(CT_FUNC_SIG, ""))
 
-#define CT_MEASURE_VNC(verbosity, name, category) CT_MAC(\
-constexpr auto CT_HELPER_STR(STIMER_NAME) = ::ChrTrcProfiler::ChrTrcCompileTimeStr::CTStr(name) + " (" + ::ChrTrcProfiler::ChrTrcCompileTimeStr::CTStr(__FUNCTION__) + ")").data();\
-::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(CT_HELPER_STR(STIMER_NAME).data(), category)\
+#define CT_MEASURE_VC(verbosity, category) CT_GATE(::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(CT_FUNC_SIG, category))
+
+#define CT_MEASURE_VNC(verbosity, name, category) CT_GATE(\
+constexpr static auto CT_HELPER_STR(STIMER_NAME) = ::ChrTrcProfiler::ChrTrcCompileTimeStr::CTStr(name) + " (" + ::ChrTrcProfiler::ChrTrcCompileTimeStr::CTStr(CT_FUNC_NAME) + ")";\
+::ChrTrcProfiler::ScopedTimer<verbosity> CT_HELPER_STR(STIMER_)(CT_HELPER_STR(STIMER_NAME).data(), category))\
 
 #define CT_MEASURE_VN(verbosity, name) CT_MEASURE_VNC(verbosity, name, "")
 
