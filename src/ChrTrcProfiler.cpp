@@ -10,8 +10,6 @@ namespace ChrTrcProfiler
 	void CTProfiler::beginSession(size_t buff_size, std::filesystem::path file_out, bool append_date, std::chrono::high_resolution_clock::duration timeout)
 	{
 		// allocate profiling buffer
-
-		m_profiling_data.resize(0);
 		m_profiling_data.reserve(buff_size / sizeof(profiledFunction));
 		
 		if (append_date)
@@ -77,6 +75,8 @@ namespace ChrTrcProfiler
 
 			m_out.close();
 		}
+
+		m_profiling_data.resize(0);
 	}
 
 	void CTProfiler::reportRecording(size_t verbosity, std::string_view name, std::string_view category, std::chrono::high_resolution_clock::time_point start, std::chrono::high_resolution_clock::time_point end)
