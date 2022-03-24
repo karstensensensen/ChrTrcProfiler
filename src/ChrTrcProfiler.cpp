@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <cassert>
+#include <algorithm>
 
 using namespace std::chrono;
 
@@ -41,7 +42,6 @@ namespace ChrTrcProfiler
 		if (m_is_profiling)
 		{
 
-			// make sure to fix any equal start times here.
 
 			// start by stopping the endSThrd
 			m_is_profiling = false;
@@ -51,6 +51,34 @@ namespace ChrTrcProfiler
 				m_end_thrd.join();
 
 			std::ofstream m_out(m_file_out);
+			
+			// fix any equal start times.
+
+			std::sort(m_profiling_data.begin(), m_profiling_data.end(),
+			[](const profiledFunction& a, const profiledFunction& b)
+			{
+				if(a.func_start != b.func_start)
+					return a.func_start < b.func_start;
+				else
+					return a.func_durr >= b.func_durr;
+			});
+
+			int64_t prev_start = -1;
+			size_t off = 0;
+
+			for(profiledFunction& pf: m_profiling_data)
+			{
+				if(prev_start == pf.func_start)
+				{
+					pf.func_start += ++off;
+					pf.func_durr -= off;
+				}
+				else
+				{
+					prev_start = pf.func_start;
+					off = 0;
+				}
+			}
 
 			// write header
 			m_out << "{\"traceEvents\":[";
@@ -74,9 +102,9 @@ namespace ChrTrcProfiler
 			m_out << "]}";
 
 			m_out.close();
-		}
 
-		m_profiling_data.resize(0);
+			m_profiling_data.resize(0);
+		}
 	}
 
 	void CTProfiler::reportRecording(size_t verbosity, std::string_view name, std::string_view category, std::chrono::high_resolution_clock::time_point start, std::chrono::high_resolution_clock::time_point end)
