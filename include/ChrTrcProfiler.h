@@ -46,6 +46,10 @@ namespace ChrTrcProfiler
 		/// @see stop()
 		~ScopedTimer() { stop(); }
 
+		/// @brief gets the current time passed since the construction of the ScopedTimer.
+		/// @return the current time in nanoseconds.
+		size_t time();
+
 		/// @brief stops the timer and reports the data to an active CTProfiler session, if avaliable.
 		void stop();
 
